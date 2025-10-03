@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Juego del Ahorcado</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+    #word { font-size: 2em; letter-spacing: 10px; margin: 20px; }
+    #letters button { margin: 5px; padding: 10px; font-size: 1em; }
+    #hangman { font-size: 1.5em; margin: 20px; }
+  </style>
+</head>
+<body>
+  <h1>Juego del Ahorcado</h1>
+  <div id="hangman">Errores: 0</div>
+  <div id="word"></div>
+  <div id="letters"></div>
+  <div id="message"></div>
+
+  <script>
+    const palabras = ["javascript", "ahorcado", "programacion", "computadora", "desarrollo"];
+    const palabra = palabras[Math.floor(Math.random() * palabras.length)];
+    let errores = 0;
+    let aciertos = [];
+
+    const wordDiv = document.getElementById("word");
+    const lettersDiv = document.getElementById("letters");
+    const hangmanDiv = document.getElementById("hangman");
+    const messageDiv = document.getElementById("message");
+
+    function mostrarPalabra() {
+      wordDiv.innerHTML = palabra.split("").map(letra =>
+        aciertos.includes(letra) ? letra : "_"
+      ).join(" ");
+    }
+
+    function crearBotones() {
+      for (let i = 97; i <= 122; i++) {
+        const letra = String.fromCharCode(i);
+        const btn = document.createElement("button");
+        btn.textContent = letra;
+        btn.onclick = () => adivinar(letra, btn);
+        lettersDiv.appendChild(btn);
+      }
+    }
+
+    function adivinar(letra, btn) {
+      btn.disabled = true;
+      if (palabra.includes(letra)) {
+        aciertos.push(letra);
+      } else {
+        errores++;
+        hangmanDiv.textContent = `Errores: ${errores}`;
+      }
+      mostrarPalabra();
+      verificarFin();
+    }
+
+    function verificarFin() {
+      if (errores >= 6) {
+        messageDiv.textContent = `¡Perdiste! La palabra era "${palabra}".`;
+        lettersDiv.innerHTML = "";
+      } else if (palabra.split("").every(letra => aciertos.includes(letra))) {
+        messageDiv.textContent = "¡Ganaste!";
+        lettersDiv.innerHTML = "";
+      }
+    }
+
+    mostrarPalabra();
+    crearBotones();
+  </script>
+</body>
+</html>
