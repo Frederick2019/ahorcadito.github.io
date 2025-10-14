@@ -90,11 +90,11 @@
         lettersDiv.innerHTML = "";
       }
     }
-    function dibujarParte(errores) {
-     switch(errores) {
+    function dibujarParte(error) {
+     switch(error) {
        case 1: //cabeza
          ctx.beginPath();
-         ctx.arc(151, 60, 15, 0, math.PI * 2);
+         ctx.arc(151, 60, 15, 0, Math.PI * 2);
          ctx.stroke();
          break;
       }
