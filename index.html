@@ -56,14 +56,7 @@
         aciertos.includes(letra) ? letra : "_"
       ).join(" ");
     }
-     function dibujarParte(errores) {
-     switch(errores) {
-       case 1: //cabeza
-         ctx.beginPath();
-         ctx.arc(151, 60, 15, 0, math.PI * 2);
-         ctx.stroke();
-         break;
-      }
+    
     }
     function crearBotones() {
       for (let i = 97; i <= 122; i++) {
@@ -87,7 +80,14 @@
       mostrarPalabra();
       verificarFin();
     }
-
+     function dibujarParte(errores) {
+     switch(errores) {
+       case 1: //cabeza
+         ctx.beginPath();
+         ctx.arc(151, 60, 15, 0, math.PI * 2);
+         ctx.stroke();
+         break;
+      }
     function verificarFin() {
       if (errores >= 6) {
         messageDiv.textContent = `¡Perdiste! La palabra era "${palabra}".`;
