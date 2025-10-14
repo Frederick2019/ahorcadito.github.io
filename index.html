@@ -56,9 +56,7 @@
         aciertos.includes(letra) ? letra : "_"
       ).join(" ");
     }
-    
-    }
-    function crearBotones() {
+     function crearBotones() {
       for (let i = 97; i <= 122; i++) {
         const letra = String.fromCharCode(i);
         const btn = document.createElement("button");
@@ -90,7 +88,6 @@
         lettersDiv.innerHTML = "";
       }
     }
-        }
     mostrarPalabra();
     crearBotones();
     function dibujarParte(error) {
