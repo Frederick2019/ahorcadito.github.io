@@ -80,14 +80,7 @@
       mostrarPalabra();
       verificarFin();
     }
-     function dibujarParte(errores) {
-     switch(errores) {
-       case 1: //cabeza
-         ctx.beginPath();
-         ctx.arc(151, 60, 15, 0, math.PI * 2);
-         ctx.stroke();
-         break;
-      }
+     
     function verificarFin() {
       if (errores >= 6) {
         messageDiv.textContent = `¡Perdiste! La palabra era "${palabra}".`;
@@ -97,7 +90,15 @@
         lettersDiv.innerHTML = "";
       }
     }
-
+    function dibujarParte(errores) {
+     switch(errores) {
+       case 1: //cabeza
+         ctx.beginPath();
+         ctx.arc(151, 60, 15, 0, math.PI * 2);
+         ctx.stroke();
+         break;
+      }
+    }
     mostrarPalabra();
     crearBotones();
   </script>
