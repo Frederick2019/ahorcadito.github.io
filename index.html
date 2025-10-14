@@ -64,7 +64,15 @@
         aciertos.includes(letra) ? letra : "_"
       ).join(" ");
     }
-    
+     function dibujarParte(errores) {
+     switch(errores) {
+       case 1: //cabeza
+         ctx.beginPath();
+         ctx.arc(151, 60, 15, 0, math.PI * 2);
+         ctx.stroke();
+         break;
+      }
+    }
     function crearBotones() {
       for (let i = 97; i <= 122; i++) {
         const letra = String.fromCharCode(i);
@@ -82,9 +90,7 @@
       } else {
         errores++;
         hangmanDiv.textContent = `Errores: ${errores}`;
-        if (errores == 1) {
-          <div class="cabeza"></div>
-        }
+        dibujarParte(errores)
       }
       mostrarPalabra();
       verificarFin();
