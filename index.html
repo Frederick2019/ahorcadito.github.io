@@ -50,6 +50,8 @@
     const lettersDiv = document.getElementById("letters");
     const hangmanDiv = document.getElementById("hangman");
     const messageDiv = document.getElementById("message");
+    const canvas = document.getElementById("canvas");
+    const ctx = canvas.getContext("2d");
 
     function mostrarPalabra() {
       wordDiv.innerHTML = palabra.split("").map(letra =>
