@@ -109,17 +109,17 @@
          ctx.fillRect(152, 90, 10, 2);
          break; 
         case 5: //pierna  izq
-         ctx.fillRect(145, 125, 5, 20);
+         ctx.fillRect(145, 125, 6, 20);
          break; 
         case 6: //pierna  der
-         ctx.fillRect(152, 125, 5, 20);
+         ctx.fillRect(152, 125, 6, 20);
          break;
         case 7: //ahorcado
          ctx.beginPath();
-         ctx.fillStyle = 'black';
          ctx.arc(151, 60, 15, 0, Math.PI * 2);
+         ctx.fillStyle = 'black';
          ctx.fill();
-         break:
+         break;
       }
     }
     mostrarPalabra();
