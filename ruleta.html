@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ruleta de Nombres</title>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #C4CEFF;
+      margin: 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 40px;
+      padding: 40px;
+    }
+    #container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    canvas {
+      border: 2px solid #333;
+      border-radius: 50%;
+      background: white;
+    }
+    #namesList, #selectedList {
+      list-style: none;
+      padding: 0;
+    }
+    #selectedContainer {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    /* --- Estilo del pop-up --- */
+    #winnerPopup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    #winnerBox {
+      background: white;
+      border-radius: 15px;
+      padding: 40px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      transform: scale(0.8);
+      animation: popIn 0.4s ease forwards;
+    }
+    #winnerBox h2 {
+      margin: 0 0 20px;
+      font-size: 24px;
+      color: #333;
+    }
+    #winnerName {
+      font-size: 40px;
+      font-weight: bold;
+      color: #007BFF;
+      margin-bottom: 20px;
+    }
+    #closePopup {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    #closePopup:hover {
+      background-color: #218838;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <h1>Ruleta de Nombres</h1>
+    <canvas id="wheelCanvas" width="400" height="400"></canvas>
+    <div>
+      <input type="text" id="nameInput" placeholder="Agregar nombre">
+      <button onclick="addName()">+ Agregar</button>
+    </div>
+    <button onclick="spinWheel()">🎡 Girar</button>
+    <ul id="namesList"></ul>
+  </div>
+
+  <div id="selectedContainer">
+    <h2>🎯 Seleccionados</h2>
+    <ul id="selectedList"></ul>
+  </div>
+
+  <!-- POP-UP DEL GANADOR -->
+  <div id="winnerPopup">
+    <div id="winnerBox">
+      <h2>🎉 ¡El ganador es!</h2>
+      <div id="winnerName"></div>
+      <button id="closePopup" onclick="closePopup()">Cerrar</button>
+    </div>
+  </div>
+
+  <script>
+    let names = ["Manuel", "Frederick"];
+    let selectedNames = [];
+    let isSpinning = false;
+
+    const canvas = document.getElementById('wheelCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function drawWheel() {
+      const total = names.length;
+      const arc = 2 * Math.PI / total;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = 0; i < total; i++) {
+        const angle = i * arc;
+        ctx.beginPath();
+        ctx.fillStyle = `hsl(${i * (360 / total)}, 70%, 60%)`;
+        ctx.moveTo(200, 200);
+        ctx.arc(200, 200, 200, angle, angle + arc);
+        ctx.fill();
+        ctx.save();
+        ctx.translate(200, 200);
+        ctx.rotate(angle + arc / 2);
+        ctx.textAlign = 'right';
+        ctx.fillStyle = '#fff';
+        ctx.font = '16px Arial';
+        ctx.fillText(names[i], 180, 10);
+        ctx.restore();
+      }
+    }
+
+    function updateNamesList() {
+      document.getElementById('namesList').innerHTML = names.map(n => `<li>${n}</li>`).join('');
+    }
+
+    function updateSelectedList() {
+      document.getElementById('selectedList').innerHTML = selectedNames.map(n => `<li>${n}</li>`).join('');
+    }
+
+    function addName() {
+      const input = document.getElementById('nameInput');
+      const name = input.value.trim();
+      if (name && !names.includes(name) && !selectedNames.includes(name)) {
+        names.push(name);
+        updateNamesList();
+        drawWheel();
+      }
+      input.value = '';
+    }
+
+    function spinWheel() {
+      if (isSpinning || names.length === 0) return;
+      isSpinning = true;
+      let spinAngle = Math.random() * 360 + 720;
+      let rotation = 0;
+      const duration = 4000;
+      const start = Date.now();
+
+      function animate() {
+        const now = Date.now();
+        const progress = Math.min((now - start) / duration, 1);
+        rotation = spinAngle * easeOut(progress);
+        ctx.save();
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.translate(200, 200);
+        ctx.rotate(rotation * Math.PI / 180);
+        ctx.translate(-200, -200);
+        drawWheel();
+        ctx.restore();
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          stopWheel(rotation % 360);
+          isSpinning = false;
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+
+    function easeOut(t) {
+      return 1 - Math.pow(1 - t, 3);
+    }
+
+    function stopWheel(finalAngle) {
+      const total = names.length;
+      const arc = 360 / total;
+      const index = Math.floor((360 - finalAngle % 360) / arc) % total;
+      const winner = names[index];
+      selectedNames.push(winner);
+      names.splice(index, 1);
+      updateNamesList();
+      updateSelectedList();
+      drawWheel();
+
+      // Mostrar pop-up personalizado con animación
+      setTimeout(() => {
+        showWinnerPopup(winner);
+      }, 200);
+    }
+
+    function showWinnerPopup(winner) {
+      const popup = document.getElementById('winnerPopup');
+      const winnerName = document.getElementById('winnerName');
+      winnerName.textContent = winner;
+      popup.style.display = 'flex';
+
+      // Lanzar confeti desde el centro de la pantalla
+      confetti({
+        particleCount: 300,
+        spread: 120,
+        origin: { y: 0.6 },
+        colors: ['#00FF7F', '#FF4500', '#FFD700', '#1E90FF']
+      });
+    }
+
+    function closePopup() {
+      document.getElementById('winnerPopup').style.display = 'none';
+    }
+
+    updateNamesList();
+    updateSelectedList();
+    drawWheel();
+  </script>
+</body>
+</html>
