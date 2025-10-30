@@ -85,10 +85,10 @@
      
     function verificarFin() {
       if (errores >= 7) {
-        messageDiv.textContent = `¡Perdiste! La palabra era "${palabra}".`;
+        messageDiv.textContent = `¡You Lost ! The word was "${palabra}".`;
         lettersDiv.innerHTML = "";
       } else if (palabra.split("").every(letra => aciertos.includes(letra))) {
-        messageDiv.textContent = "¡Ganaste!";
+        messageDiv.textContent = "¡You Won!";
         lettersDiv.innerHTML = "";
       }
     }
