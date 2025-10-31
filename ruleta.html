@@ -255,7 +255,8 @@
     function closePopup() {
       document.getElementById('winnerPopup').style.display = 'none';
     }
-    function reset(){
+    function rreset(){
+      document.getElementById('namesList').reset();
       names.clear();
       updateNamesList();
       updateSelectedList();
@@ -263,7 +264,7 @@
     updateNamesList();
     updateSelectedList();
     drawWheel();
-    reset();
+    rreset();
     
   </script>
 </body>
