@@ -51,7 +51,16 @@
     button:hover {
       background-color: #0056b3;
     }
-
+    button1 {
+      margin: 10px;
+      padding: 20px 30px;
+      font-size: 16px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
     /* --- Estilo del pop-up --- */
     #winnerPopup {
       display: none;
@@ -119,6 +128,9 @@
     </div>
     <button onclick="spinWheel()">🎡 Girar</button>
     <ul id="namesList"></ul>
+  </div>
+  <button1 onclick="Reset()">🎡 Reset</button1>
+    
   </div>
 
   <div id="selectedContainer">
@@ -252,10 +264,14 @@
     function closePopup() {
       document.getElementById('winnerPopup').style.display = 'none';
     }
-
+    function Reset(){
+      let names = [" "]
+    }
     updateNamesList();
     updateSelectedList();
     drawWheel();
+    Reset();
+    
   </script>
 </body>
 </html>
