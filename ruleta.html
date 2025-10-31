@@ -120,12 +120,7 @@
     <button onclick="spinWheel()">🎡 Girar</button>
     <ul id="namesList"></ul>
     </div>
-    <div>
-  <button onclick="rreset()">🎡 Reset</button>
-   <ul id="namesList"></ul>
-    </div>
-
-  <div id="selectedContainer">
+   <div id="selectedContainer">
     <h2>🎯 Seleccionados</h2>
     <ul id="selectedList"></ul>
   </div>
@@ -256,18 +251,10 @@
     function closePopup() {
       document.getElementById('winnerPopup').style.display = 'none';
     }
-    function rreset(){
-      
-      names.splice(index);
-      updateNamesList();
-      updateSelectedList();
-      return;
-    }
     updateNamesList();
     updateSelectedList();
     drawWheel();
-    rreset();
-    
+      
   </script>
 </body>
 </html>
