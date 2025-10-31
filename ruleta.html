@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ruleta de Nombres</title>
+  <title>Names Roulette</title>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <style>
     body {
@@ -110,7 +110,7 @@
 </head>
 <body>
   <div id="container">
-    <h1>Ruleta de Nombres</h1>
+    <h1>Names Roulette</h1>
     <canvas id="wheelCanvas" width="400" height="400"></canvas>
     <div>
       <input type="text" id="nameInput" placeholder="Agregar nombre">
@@ -122,7 +122,8 @@
     </div>
     <div>
   <button onclick="reset()">🎡 Reset</button>
-   </div>
+   <ul id="namesList"></ul>
+    </div>
 
   <div id="selectedContainer">
     <h2>🎯 Seleccionados</h2>
