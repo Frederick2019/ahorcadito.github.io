@@ -256,7 +256,9 @@
       document.getElementById('winnerPopup').style.display = 'none';
     }
     function reset(){
-       names == [" "]
+      names = [" "];
+      updateNamesList();
+      
     }
     updateNamesList();
     updateSelectedList();
