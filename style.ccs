@@ -3,3 +3,9 @@
   justified-context: center;
   aling-items: center;
 }
+
+#fondo{
+width: 800px;
+heigth: 500px;
+background-image: url()
+}
