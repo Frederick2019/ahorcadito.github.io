@@ -3,7 +3,31 @@
 <head>
 <meta charset="UTF-8> 
  <title>Games</title>
-   <link rel="stylesheet" href="https://github.com/Frederick2019/ahorcadito.github.io/blob/main/style.ccs">    
+  <style>
+.contenedor {
+  /* Para centrar el div hijo */
+     display: flex;
+     justify-content: center; /* Centra horizontalmente */
+     align-items: center;     /* Centra verticalmente */
+
+     /* Para usar el div como fondo */
+      background-image: url('https://github.com/Frederick2019/ahorcadito.github.io/blob/main/GAMES.jpg');
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover; /* Para que la imagen cubra todo el div */
+  
+  /* Propiedades para que el contenedor ocupe toda la pantalla */
+  min-height: 100vh; /* Asegura que el contenedor tenga altura */
+  width: 100%;
+}
+
+.div-centrado {
+  /* Contenido del div que quieres centrar */
+  background-color: rgba(255, 255, 255, 0.7); /* Ejemplo de fondo del div interno */
+  padding: 20px;
+  text-align: center; /* Para centrar texto dentro del div */
+}
+</style>   
   
     <form action="recibe.php" method="post">
       <input type="text" placeholder="Name:" name="Nombre">
@@ -11,7 +35,7 @@
     </form>
 </head>
   <body>
-   <link rel="stylesheet" href="https://github.com/Frederick2019/ahorcadito.github.io/blob/main/style.ccs">
+   
     <div class="flex-center">
       <div id="fondo" class="flex-center">
           <h1>Are you ready to play</h1>
@@ -21,3 +45,4 @@
     </div> 
   </body>
 </html>
+https://github.com/Frederick2019/ahorcadito.github.io/blob/main/GAMES.jpg
